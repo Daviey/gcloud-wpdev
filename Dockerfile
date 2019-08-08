@@ -33,4 +33,8 @@ RUN /opt/gcloud/bin/gcloud components install -q \
     app-engine-php \
     cloud-datastore-emulator
 
-CMD dev_appserver.py --php_executable_path=/usr/local/bin/php-cgi --host 0.0.0.0 /opt/site/
+RUN wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy \
+    && chmod +x cloud_sql_proxy
+
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
